@@ -3658,7 +3658,6 @@ static ssize_t f2fs_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
 		if (err > 0)
 			f2fs_update_iostat(sbi, APP_DIRECT_READ_IO, err);
 	}
-
 out:
 	trace_f2fs_direct_IO_exit(inode, offset, count, rw, err);
 
