@@ -811,7 +811,7 @@ static int smblib_set_usb_pd_fsw(struct smb_charger *chg, int voltage)
 static int smblib_set_usb_pd_allowed_voltage(struct smb_charger *chg,
 					int min_allowed_uv, int max_allowed_uv)
 {
-	int rc, aicl_threshold;
+	int rc = 0, aicl_threshold;
 	u8 vbus_allowance;
 
 	if (chg->chg_param.smb_version == PMI632_SUBTYPE)
@@ -1748,7 +1748,7 @@ static int smblib_awake_vote_callback(struct votable *votable, void *data,
 	struct smb_charger *chg = data;
 
 	if (awake)
-		pm_wakeup_event(chg->dev, 500);
+		pm_stay_awake(chg->dev);
 	else
 		pm_relax(chg->dev);
 
@@ -3502,11 +3502,12 @@ int smblib_get_prop_usb_voltage_now(struct smb_charger *chg,
 
 restore_adc_config:
 	 /* Restore ADC channel config */
-	if (chg->wa_flags & USBIN_ADC_WA)
+	if (chg->wa_flags & USBIN_ADC_WA) {
 		rc = smblib_write(chg, BATIF_ADC_CHANNEL_EN_REG, reg);
 		if (rc < 0)
 			smblib_err(chg, "Couldn't write ADC config rc=%d\n",
 						rc);
+	}
 
 unlock:
 	mutex_unlock(&chg->adc_lock);
