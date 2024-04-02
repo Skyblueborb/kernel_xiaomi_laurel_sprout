@@ -260,22 +260,6 @@ static inline __must_check size_t __ab_c_size(size_t n, size_t size, size_t c)
 	return bytes;
 }
 
-/**
- * struct_size() - Calculate size of structure with trailing array.
- * @p: Pointer to the structure.
- * @member: Name of the array member.
- * @n: Number of elements in the array.
- *
- * Calculates size of memory needed for structure @p followed by an
- * array of @n @member elements.
- *
- * Return: number of bytes needed or SIZE_MAX on overflow.
- */
-#define struct_size(p, member, n)					\
-	__ab_c_size(n,							\
-		    sizeof(*(p)->member) + __must_be_array((p)->member),\
-		    sizeof(*(p)))
-
 /** check_shl_overflow() - Calculate a left-shifted value and check overflow
  *
  * @a: Value to be shifted
