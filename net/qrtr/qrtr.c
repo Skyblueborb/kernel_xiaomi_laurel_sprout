@@ -812,6 +812,10 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 		v2 = data;
 		hdrlen = sizeof(*v2) + v2->optlen;
 
+	    skb = __netdev_alloc_skb(NULL, len, GFP_ATOMIC | __GFP_NOWARN);
+	    if (!skb)
+		    return -ENOMEM;
+
 		cb->type = v2->type;
 		cb->confirm_rx = !!(v2->flags & QRTR_FLAGS_CONFIRM_RX);
 		cb->src_node = le16_to_cpu(v2->src_node_id);
