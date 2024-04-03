@@ -3,9 +3,18 @@
 # Define variables
 CLANG_VER="clang-r498229b"
 ROM_PATH="/mnt/QuickBoi/LineageOS/21"
-CLANG_DIR=$ROM_PATH/prebuilts/clang/host/linux-x86/$CLANG_VER
 
-# CLANG_DIR=$HOME/toolchains/neutron-clang
+# Check if CLANG_DIR exists, if not try alternative paths
+if [ -d "$ROM_PATH/prebuilts/clang/host/linux-x86/$CLANG_VER" ]; then
+    CLANG_DIR="$ROM_PATH/prebuilts/clang/host/linux-x86/$CLANG_VER"
+elif [ -d "$HOME/toolchains/neutron-clang" ]; then
+    CLANG_DIR="$HOME/toolchains/neutron-clang"
+else
+    echo "Could not find the specified clang directory."
+    exit 1
+fi
+
+echo "Using clang directory: $CLANG_DIR"
 
 
 KERNEL_DIR=$PWD
