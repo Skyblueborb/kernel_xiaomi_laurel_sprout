@@ -192,8 +192,6 @@ int xhci_start(struct xhci_hcd *xhci)
 		xhci->run_graceperiod = jiffies + msecs_to_jiffies(500);
 	}
 
-	enable_irq(hcd->irq);
-
 	return ret;
 }
 
