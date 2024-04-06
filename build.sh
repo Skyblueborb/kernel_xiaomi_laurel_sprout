@@ -55,6 +55,7 @@ echo -e "${CYAN}***********************************************${DEFAULT}"
 cp out/arch/arm64/boot/Image.gz-dtb $Anykernel_DIR
 cp out/arch/arm64/boot/dtbo.img $Anykernel_DIR
 cd $Anykernel_DIR
+rm *.zip
 zip -r9 $FINAL_ZIP.zip * -x .git README.md *placeholder
 
 echo -e "${CYAN}***********************************************${DEFAULT}"
